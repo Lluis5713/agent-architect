@@ -1,0 +1,19 @@
+# ============================================================================
+# LOCAL OVERRIDES — Machine-specific paths (DO NOT COMMIT manifest.local.yaml)
+# ============================================================================
+# Copy this to manifest.local.yaml and set your local paths.
+# The builder agent checks manifest.local.yaml first, then falls back to
+# manifest.yaml. This keeps machine-specific paths out of version control.
+#
+# Only local_path needs to be here — everything else stays in manifest.yaml.
+# ============================================================================
+
+services:
+  web-ui:
+    local_path: "/Users/yourname/projects/web-ui"
+  bff-gateway:
+    local_path: "/Users/yourname/projects/bff-gateway"
+  order-service:
+    local_path: "/Users/yourname/projects/order-service"
+  payment-service:
+    local_path: "/Users/yourname/repos/payment-service"

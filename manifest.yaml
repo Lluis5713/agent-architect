@@ -1,0 +1,178 @@
+# ============================================================================
+# PROJECT MANIFEST — The single source of truth for the orchestration framework
+# ============================================================================
+# This file drives all agent behavior. Configure it once, agents do the rest.
+#
+# INSTRUCTIONS:
+#   1. Fill in project metadata
+#   2. Define your services (add/remove as needed)
+#   3. Set each service's `status` to control what agents do with it
+#   4. Run phases: /project:1-discover → /project:2-architect → etc.
+# ============================================================================
+
+project:
+  name: "your-project-name"
+  description: "Brief description of what this system does"
+  business_domain: "e.g., e-commerce, fintech, healthcare"
+  team: "your-team-name"
+  started: "2026-03-17"
+
+# ---------------------------------------------------------------------------
+# TECH STACK — Agents will follow these choices
+# ---------------------------------------------------------------------------
+tech_stack:
+  languages:
+    backend: "TypeScript"          # or Java, Go, Python, etc.
+    frontend: "TypeScript"
+  backend_framework: "NestJS"      # or Express, Spring Boot, FastAPI, etc.
+  frontend_framework: "Next.js"    # or React, Angular, Vue, etc.
+  database: "PostgreSQL"           # or MongoDB, DynamoDB, etc.
+  cache: "Redis"                   # optional
+  message_broker: "RabbitMQ"       # optional — for async events between services
+  api_style: "REST"                # REST, GraphQL, gRPC
+  container: "Docker"
+  ci_cd: "GitHub Actions"
+  testing:
+    unit: "Jest"
+    integration: "Jest + Supertest"
+    e2e: "Playwright"
+    contract: "Pact"               # for cross-service contract testing
+  observability:
+    logging: "structured JSON"
+    tracing: "OpenTelemetry"
+    monitoring: "Prometheus + Grafana"  # optional
+
+# ---------------------------------------------------------------------------
+# SERVICES — Define every service in the system
+# ---------------------------------------------------------------------------
+# status options:
+#   new        → service doesn't exist yet, build from scratch
+#   existing   → service exists, reference its repo/api spec
+#   enrich     → service exists but needs new features/changes
+#   skip       → don't touch this service in current phase
+#
+# type options: ui, bff, domain, shared-lib, infrastructure
+#
+# repo & local_path:
+#   repo       → git URL (for cloning existing repos or pushing new ones)
+#   local_path → absolute or relative path to the service code on disk
+#                leave empty — the builder agent will ask at build time
+#                once set, all future builds/rebuilds use this path
+# ---------------------------------------------------------------------------
+services:
+
+  # --- Example: Frontend ---
+  - name: "web-ui"
+    type: "ui"
+    status: "new"                  # change to: new | existing | enrich | skip
+    description: "Customer-facing web application"
+    owner: ""                      # team or person responsible (e.g., "frontend-team", "@john")
+    repo: ""                       # git URL — for clone/push (e.g., github.com/org/web-ui)
+    local_path: ""                 # where the code lives on disk — builder asks if empty
+    port: 3000
+    database: null                 # null = no database for this service
+    depends_on:
+      - "bff-gateway"
+    owns_events: []                # events this service publishes
+    notes: ""
+
+  # --- Example: BFF ---
+  - name: "bff-gateway"
+    type: "bff"
+    status: "new"
+    description: "Backend-for-frontend aggregating domain APIs"
+    owner: ""
+    repo: ""
+    local_path: ""
+    port: 4000
+    database: null                 # BFF typically has no database
+    depends_on:
+      - "order-service"
+      - "payment-service"
+    owns_events: []
+    notes: ""
+
+  # --- Example: Domain Service ---
+  - name: "order-service"
+    type: "domain"
+    status: "new"
+    description: "Manages order lifecycle"
+    owner: ""
+    repo: ""
+    local_path: ""
+    port: 5001
+    database: "PostgreSQL"         # override per service, or null to use tech_stack default
+    depends_on: []
+    owns_events:
+      - "order.created"
+      - "order.updated"
+      - "order.cancelled"
+    notes: ""
+
+  # --- Example: Existing Service (already has a repo) ---
+  - name: "payment-service"
+    type: "domain"
+    status: "existing"
+    description: "Handles payment processing"
+    owner: ""
+    repo: "https://github.com/your-org/payment-service"
+    local_path: ""                 # builder will ask where to clone, or set path if already cloned
+    port: 5002
+    database: "PostgreSQL"
+    depends_on:
+      - "order-service"            # listens to order events
+    owns_events:
+      - "payment.completed"
+      - "payment.failed"
+    notes: "Already in production. API spec in references/existing-apis/"
+
+# ---------------------------------------------------------------------------
+# ENVIRONMENTS — Where services run
+# ---------------------------------------------------------------------------
+environments:
+  - name: "local"
+    description: "Local development (docker-compose)"
+  - name: "dev"
+    description: "Shared development environment"
+    # Add environment-specific config like URLs, feature flags, etc.
+  - name: "staging"
+    description: "Pre-production validation"
+  - name: "production"
+    description: "Live environment"
+
+# ---------------------------------------------------------------------------
+# BUILD TARGETS — Which services to build/enrich in current run
+# ---------------------------------------------------------------------------
+# Override: list specific services to build. If empty, builds all non-skip.
+# This is what you change between runs to focus agents on specific services.
+# ---------------------------------------------------------------------------
+build_targets: []
+# Example: ["order-service", "bff-gateway"]
+
+# ---------------------------------------------------------------------------
+# QUALITY GATES — What must pass before moving to next phase
+# ---------------------------------------------------------------------------
+quality_gates:
+  spec_review: true                # Human must approve specs before building
+  contract_review: true            # Human must approve API contracts
+  test_coverage_minimum: 80        # Percentage
+  linting_must_pass: true
+  security_scan: true              # Run basic security checks
+  pr_review_required: true         # Builder creates PRs, not direct commits
+
+# ---------------------------------------------------------------------------
+# APPROVALS — Track who reviewed what (agents update this, humans verify)
+# ---------------------------------------------------------------------------
+# Agents will prompt for sign-off at quality gates and record it here.
+# This creates an audit trail of who approved specs/contracts before building.
+# ---------------------------------------------------------------------------
+approvals: {}
+# Example after spec review:
+# approvals:
+#   spec_review:
+#     approved_by: "@john"
+#     date: "2026-03-17"
+#     notes: "Approved with minor comment on order-service pagination"
+#   contract_review:
+#     approved_by: "@sarah"
+#     date: "2026-03-18"

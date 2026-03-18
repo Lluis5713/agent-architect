@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build artifacts (if any service is built locally)
+node_modules/
+dist/
+build/
+*.log
+
+# Local overrides (machine-specific paths, not shared)
+manifest.local.yaml
+
+# Secrets (should never be committed)
+.env
+.env.local
+*.pem
+*.key
