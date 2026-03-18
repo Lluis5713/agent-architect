@@ -27,6 +27,8 @@ These are the planned improvements, roughly prioritized. Pick one and contribute
 | [#1](https://github.com/nakurian/agent-architect/issues/1) | **Distributed validation** — support validating across multiple developers' machines (remote URLs, docker images) |
 | [#2](https://github.com/nakurian/agent-architect/issues/2) | **Dedicated test phase** — contract testing, e2e testing, performance baselines between Build and Validate |
 | [#5](https://github.com/nakurian/agent-architect/issues/5) | **Incremental execution** — detect changes and only re-run affected specs/contracts |
+| [#8](https://github.com/nakurian/agent-architect/issues/8) | **UI/Frontend standards** — component architecture, accessibility, performance budgets, UX patterns |
+| [#9](https://github.com/nakurian/agent-architect/issues/9) | **Testing standards** — test pyramid, mocking strategy, contract testing, CI integration, coverage rules |
 
 ### Medium Priority
 
