@@ -1,4 +1,4 @@
-# How To Use — Agent Orchestration Framework
+# How To Use — Agent Architect
 
 A step-by-step guide for team members using this framework to plan and build microservices projects.
 
@@ -37,13 +37,13 @@ No other dependencies. The framework is just markdown files and folders.
 
 ```bash
 # Option A: GitHub template (recommended)
-gh repo create my-project-plan --template your-org/agent-orch --private
+gh repo create my-project-plan --template nakurian/agent-architect --private
 cd my-project-plan
 
 # Option B: Manual copy
-cp -r agent-orch/ my-project-plan/
+cp -r agent-architect/ my-project-plan/
 cd my-project-plan
-git init && git add -A && git commit -m "feat: initialize from agent-orch template"
+git init && git add -A && git commit -m "feat: initialize from agent-architect template"
 ```
 
 ### Step 2: Run Phase 0 — Interactive Setup
@@ -521,7 +521,7 @@ This copies all Claude commands to `.github/prompts/` as Copilot prompt files.
 When a new team member clones the planning repo:
 
 ```bash
-git clone https://github.com/your-org/my-project-plan
+git clone https://github.com/your-org/your-project-plan
 cd my-project-plan
 
 # Create local path overrides (machine-specific)

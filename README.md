@@ -1,6 +1,6 @@
-# Agent Orchestration Framework
+# Agent Architect
 
-A template repository for building multi-microservice systems using Claude Code as your AI development team.
+A template repository for building multi-microservice systems using AI coding tools as your development team.
 
 **No custom tooling. No learning curve. Just folders, markdown, and your AI coding tool.**
 
@@ -35,10 +35,10 @@ A template repository for building multi-microservice systems using Claude Code 
 
 ```bash
 # Option A: Use GitHub template
-gh repo create my-project-plan --template your-org/agent-orch --private
+gh repo create my-project-plan --template nakurian/agent-architect --private
 
 # Option B: Copy manually
-cp -r agent-orch/ my-project-plan/
+cp -r agent-architect/ my-project-plan/
 cd my-project-plan && git init
 ```
 

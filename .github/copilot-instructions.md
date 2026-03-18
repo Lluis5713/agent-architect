@@ -1,4 +1,4 @@
-# Agent Orchestration Framework
+# Agent Architect
 
 This is a **project planning repository**, not a code repository. It contains business context, specifications, and agent skills that drive the development of a multi-service system.
 
