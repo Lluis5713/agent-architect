@@ -40,10 +40,11 @@ No other dependencies. The framework is just markdown files and folders.
 gh repo create my-project-plan --template nakurian/agent-architect --private
 cd my-project-plan
 
-# Option B: Manual copy
-cp -r agent-architect/ my-project-plan/
+# Option B: Clone and disconnect
+git clone https://github.com/nakurian/agent-architect.git my-project-plan
 cd my-project-plan
-git init && git add -A && git commit -m "feat: initialize from agent-architect template"
+rm -rf .git && git init
+git add -A && git commit -m "feat: init from agent-architect template"
 ```
 
 ### Step 2: Run Phase 0 — Interactive Setup

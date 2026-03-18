@@ -34,12 +34,15 @@ A template repository for building multi-microservice systems using AI coding to
 ### 1. Create your project from this template
 
 ```bash
-# Option A: Use GitHub template
+# Option A: Use GitHub template (recommended)
 gh repo create my-project-plan --template nakurian/agent-architect --private
+cd my-project-plan
 
-# Option B: Copy manually
-cp -r agent-architect/ my-project-plan/
-cd my-project-plan && git init
+# Option B: Clone and disconnect
+git clone https://github.com/nakurian/agent-architect.git my-project-plan
+cd my-project-plan
+rm -rf .git && git init
+git add -A && git commit -m "feat: init from agent-architect template"
 ```
 
 ### 2. Run the interactive setup
