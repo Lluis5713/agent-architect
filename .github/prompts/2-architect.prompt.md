@@ -52,6 +52,16 @@ For each significant decision, write an ADR in `context/decisions/`:
 - Must include: Context, Decision, Consequences
 - Cover at least: database strategy, auth approach, service communication patterns, event schema format
 
+**Required ADR — Test Strategy** (`ADR-NNN-test-strategy.md`):
+- Test pyramid ratios (default: 70% unit / 20% integration / 10% e2e — adjust if needed)
+- Contract testing approach (Pact provider-driven vs consumer-driven)
+- Test data strategy (factories, fixtures, test containers)
+- Cross-service test environment (docker-compose for local, what for CI?)
+- Performance testing approach and tools (k6, Artillery, etc.)
+- Security scanning tools (OWASP ZAP, Snyk, npm audit, etc.)
+
+This ADR is referenced by `standards/testing-standards.md` and drives TEST-PLAN.md generation in Phase 3.
+
 #### 2f. Dependency Graph
 Map the build order — which services can be built in parallel, which have dependencies:
 ```

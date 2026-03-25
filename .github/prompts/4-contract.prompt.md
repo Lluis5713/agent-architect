@@ -124,15 +124,29 @@ Create `contracts/CONTRACT-MATRIX.md`:
 | Money | order-service, payment-service | shared-models/money.json |
 ```
 
-### Step 6: Validate Consistency
+### Step 6: Generate Integration Test Plan
+
+Create `contracts/INTEGRATION-TEST-PLAN.md` following the template in `standards/testing-standards.md`:
+
+1. **End-to-End User Journeys** — For each major user journey that spans multiple services (from `phases/2-architect.md` data flows), define the step-by-step flow with verification points at each step
+2. **Failure Cascade Scenarios** — For each service dependency, define what happens when the provider is down/slow. Include: setup, trigger, expected graceful degradation, and what must NOT happen (data corruption, 500 to user)
+3. **Eventual Consistency Scenarios** — For each async event flow, define what happens when delivery is delayed. How long until the system reaches consistent state? How to verify?
+4. **Contract Compliance** — For each contract file, list what must be verified: schema validity, error code handling, backward compatibility
+
+If running in team mode, the qa-security agent augments this with:
+- Cross-service security scenarios (e.g., token forgery between services, event spoofing)
+- Performance scenarios spanning multiple services
+
+### Step 7: Validate Consistency
 
 Check that:
 - Every contract file matches the corresponding SPEC.md exactly
 - No orphaned contracts (every contract has both a provider and consumer)
 - All shared model references resolve
 - Event versions are consistent
+- Every cross-service dependency has at least one integration test scenario in INTEGRATION-TEST-PLAN.md
 
-### Step 7: Mark Complete
+### Step 8: Mark Complete
 
 Create `phases/4-contract.md` with the validation results and completion marker.
 

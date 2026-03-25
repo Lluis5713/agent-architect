@@ -27,8 +27,10 @@ Read ONLY these files:
 1. `manifest.yaml` — tech stack and this service's config
 2. `standards/coding-standards.md` — coding rules to follow
 3. `standards/api-design.md` — API conventions
-4. `services/$SERVICE_NAME/specs/SPEC.md` — THE implementation blueprint
-5. Relevant contracts from `contracts/`:
+4. `standards/testing-standards.md` — testing conventions and edge case checklists
+5. `services/$SERVICE_NAME/specs/SPEC.md` — THE implementation blueprint
+6. `services/$SERVICE_NAME/specs/TEST-PLAN.md` — test cases to implement (if exists)
+7. Relevant contracts from `contracts/`:
    - API contracts where this service is provider OR consumer
    - Event contracts this service publishes or subscribes to
    - Shared models this service uses
@@ -89,6 +91,9 @@ Follow the **Implementation Sequence** from the SPEC.md exactly. For each step:
 
 1. **Write the code** — follow standards strictly
 2. **Write tests alongside** — not after. Test file goes in `__tests__/` next to the source
+   - If TEST-PLAN.md exists, implement the test cases mapped to the current implementation step
+   - Each test file MUST include a traceability comment: `// Covers: TC-SVC-ACC-001, TC-SVC-EDGE-003`
+   - Prioritize: ALL P0 test cases must be implemented, 95%+ of P1 cases should be
 3. **Run tests** — ensure they pass before moving to the next step
 4. **Commit** — one commit per implementation step with a descriptive message
 
@@ -118,7 +123,9 @@ When implementing event consumption:
 
 Before marking complete:
 - [ ] All tests pass
-- [ ] Test coverage meets minimum from `manifest.yaml` quality_gates
+- [ ] Test coverage meets minimum from `manifest.yaml` quality_gates (`test_coverage_minimum`)
+- [ ] Test case coverage meets minimum from `manifest.yaml` quality_gates (`test_case_coverage_minimum`) — check P0+P1 cases from TEST-PLAN.md
+- [ ] Contract tests exist for every API/event contract this service participates in (if `contract_test_required` gate is enabled)
 - [ ] Linting passes (ESLint/Prettier or equivalent)
 - [ ] No hardcoded secrets or credentials
 - [ ] Health check endpoint works
@@ -127,7 +134,7 @@ Before marking complete:
 - [ ] Environment variables documented in .env.example
 - [ ] README.md with setup and run instructions
 
-### Step 7: Output Build Report
+### Step 7: Output Build Report and Test Report
 
 Create `services/$SERVICE_NAME/specs/BUILD-REPORT.md`:
 
@@ -161,6 +168,13 @@ Create `services/$SERVICE_NAME/specs/BUILD-REPORT.md`:
 [commands to run the test suite]
 \`\`\`
 ```
+
+Also create `services/$SERVICE_NAME/specs/TEST-REPORT.md` following the template in `standards/testing-standards.md`:
+- Map every implemented test back to its TEST-PLAN.md test case ID
+- Report coverage percentages (line, branch, function)
+- Report test case coverage (P0 implemented: N/M, P1 implemented: N/M)
+- List any test cases deferred with reason
+- List any unplanned tests added during implementation (bugs discovered, etc.)
 
 ## Important Rules
 - Follow the SPEC.md religiously — if something is ambiguous, check the contracts

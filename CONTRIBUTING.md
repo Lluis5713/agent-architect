@@ -22,27 +22,28 @@ These are the planned improvements, roughly prioritized. Pick one and contribute
 
 ### High Priority
 
-| Issue | Description |
-|-------|-------------|
-| [#1](https://github.com/nakurian/agent-architect/issues/1) | **Distributed validation** — support validating across multiple developers' machines (remote URLs, docker images) |
-| [#2](https://github.com/nakurian/agent-architect/issues/2) | **Dedicated test phase** — contract testing, e2e testing, performance baselines between Build and Validate |
-| [#5](https://github.com/nakurian/agent-architect/issues/5) | **Incremental execution** — detect changes and only re-run affected specs/contracts |
-| [#8](https://github.com/nakurian/agent-architect/issues/8) | **UI/Frontend standards** — component architecture, accessibility, performance budgets, UX patterns |
-| [#9](https://github.com/nakurian/agent-architect/issues/9) | **Testing standards** — test pyramid, mocking strategy, contract testing, CI integration, coverage rules |
+| Issue | Description | Status |
+|-------|-------------|--------|
+| [#1](https://github.com/nakurian/agent-architect/issues/1) | **Distributed validation** — support validating across multiple developers' machines (remote URLs, docker images) | Open |
+| [#2](https://github.com/nakurian/agent-architect/issues/2) | **Dedicated test phase** — contract testing, e2e testing, performance baselines between Build and Validate | **Done** — TEST-PLAN.md (Phase 3), INTEGRATION-TEST-PLAN.md (Phase 4), TEST-REPORT.md (Phase 5) |
+| [#5](https://github.com/nakurian/agent-architect/issues/5) | **Incremental execution** — detect changes and only re-run affected specs/contracts | Open |
+| [#8](https://github.com/nakurian/agent-architect/issues/8) | **UI/Frontend standards** — component architecture, accessibility, performance budgets, UX patterns | Open |
+| [#9](https://github.com/nakurian/agent-architect/issues/9) | **Testing standards** — test pyramid, mocking strategy, contract testing, CI integration, coverage rules | **Done** — `standards/testing-standards.md` with edge case checklists, templates, quality gates |
 
 ### Medium Priority
 
-| Issue | Description |
-|-------|-------------|
-| [#3](https://github.com/nakurian/agent-architect/issues/3) | **Deployment phase** — generate CI/CD pipelines, IaC, K8s manifests |
-| [#4](https://github.com/nakurian/agent-architect/issues/4) | **Monorepo support** — alternative layout with workspace-based tooling |
-| [#7](https://github.com/nakurian/agent-architect/issues/7) | **Tech-stack templates** — pre-built standards for Spring Boot, FastAPI, Go, etc. |
+| Issue | Description | Status |
+|-------|-------------|--------|
+| [#3](https://github.com/nakurian/agent-architect/issues/3) | **Deployment phase** — generate CI/CD pipelines, IaC, K8s manifests | Open |
+| [#4](https://github.com/nakurian/agent-architect/issues/4) | **Monorepo support** — alternative layout with workspace-based tooling | Open |
+| [#7](https://github.com/nakurian/agent-architect/issues/7) | **Tech-stack templates** — pre-built standards for Spring Boot, FastAPI, Go, etc. | Open |
+| [#10](https://github.com/nakurian/agent-architect/issues/10) | **Agent team orchestration** — multi-agent team mode with specialized roles | **Done** — `/project:team-start` with 5-agent team |
 
 ### Nice to Have
 
-| Issue | Description |
-|-------|-------------|
-| [#6](https://github.com/nakurian/agent-architect/issues/6) | **Web dashboard** — visual project status and dependency graph |
+| Issue | Description | Status |
+|-------|-------------|--------|
+| [#6](https://github.com/nakurian/agent-architect/issues/6) | **Web dashboard** — visual project status and dependency graph | Open |
 
 ## How to Submit a PR
 

@@ -47,11 +47,21 @@ You are the **Review Agent**. Your job is to review all generated code for produ
 - [ ] Configuration is externalized (env vars, not hardcoded)
 
 #### Testing
-- [ ] Test coverage meets minimum threshold
+- [ ] Test coverage meets minimum threshold (`test_coverage_minimum` from manifest quality_gates)
 - [ ] Tests cover happy path AND error cases
 - [ ] Tests are independent (no shared mutable state)
 - [ ] No flaky tests (no sleep-based timing)
 - [ ] Integration tests use real dependencies (not mocks for DB)
+
+#### Test Completeness (if TEST-PLAN.md and TEST-REPORT.md exist)
+- [ ] Every business rule in SPEC.md has at least one test case in TEST-PLAN.md
+- [ ] All P0 test cases from TEST-PLAN.md are implemented (check TEST-REPORT.md)
+- [ ] 95%+ of P1 test cases are implemented (check `test_case_coverage_minimum` gate)
+- [ ] Test traceability comments present (`// Covers: TC-*`)
+- [ ] No trivially passing tests (assertions are meaningful, not `expect(true).toBe(true)`)
+- [ ] Contract tests exist for every API/event contract this service participates in
+- [ ] Security test cases from TEST-PLAN.md section 4 have been executed
+- [ ] Edge cases from the systematic checklist have been addressed (or documented as N/A with reason)
 
 ### Step 2: Cross-Service Review
 - [ ] API contract consistency verified
@@ -88,9 +98,9 @@ Create `phases/7-review.md`:
 
 ## Per-Service Scorecard
 
-| Service | Security | Reliability | Performance | Maintainability | Testing | Overall |
-|---------|----------|-------------|-------------|-----------------|---------|---------|
-| [name]  | [A-F]    | [A-F]       | [A-F]       | [A-F]           | [A-F]   | [A-F]   |
+| Service | Security | Reliability | Performance | Maintainability | Testing | Test Completeness | Overall |
+|---------|----------|-------------|-------------|-----------------|---------|-------------------|---------|
+| [name]  | [A-F]    | [A-F]       | [A-F]       | [A-F]           | [A-F]   | [A-F]             | [A-F]   |
 
 ---
 phase: review

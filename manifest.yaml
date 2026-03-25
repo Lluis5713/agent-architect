@@ -18,6 +18,20 @@ project:
   started: "2026-03-17"
 
 # ---------------------------------------------------------------------------
+# FRAMEWORK — Version and mode tracking for team orchestration
+# ---------------------------------------------------------------------------
+# version: "1.0" = sequential only, "2.0" = team-capable
+# mode: "sequential" (run phases manually) or "teams" (agent team orchestrates)
+# Phase commands work identically in both modes — teams add orchestration on top.
+# ---------------------------------------------------------------------------
+framework:
+  version: "2.0"
+  mode: "sequential"           # "sequential" | "teams" — set by /project:team-start
+  migrated_from: null          # set to "1.0" if upgraded from old version
+  migrated_at: null
+  completed_phases: []         # auto-detected from phases/ directory
+
+# ---------------------------------------------------------------------------
 # TECH STACK — Agents will follow these choices
 # ---------------------------------------------------------------------------
 tech_stack:
@@ -155,7 +169,12 @@ build_targets: []
 quality_gates:
   spec_review: true                # Human must approve specs before building
   contract_review: true            # Human must approve API contracts
-  test_coverage_minimum: 80        # Percentage
+  test_plan_review: true           # Human/QA must approve TEST-PLAN.md before building
+  test_coverage_minimum: 80        # Percentage (line coverage)
+  test_case_coverage_minimum: 95   # Percentage of P0+P1 test cases that must be implemented
+  contract_test_required: true     # Pact tests must exist for every contract
+  security_test_required: true     # Security test cases must be executed
+  integration_test_required: true  # Cross-service integration scenarios must pass
   linting_must_pass: true
   security_scan: true              # Run basic security checks
   pr_review_required: true         # Builder creates PRs, not direct commits

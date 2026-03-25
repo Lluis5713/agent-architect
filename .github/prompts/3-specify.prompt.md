@@ -163,18 +163,15 @@ Valid transitions:
 ```markdown
 ## Testing Strategy
 
-### Unit Tests
-- [Service/Function]: test [what]
-- [Service/Function]: test [what]
+See [TEST-PLAN.md](./TEST-PLAN.md) for the complete test plan with all test cases.
 
-### Integration Tests
-- [Endpoint]: test [scenario]
-- [Endpoint]: test [scenario]
-- [Event handler]: test [scenario]
-
-### Edge Cases to Cover
-- [edge case 1]
-- [edge case 2]
+Summary:
+- Acceptance tests: [N] (happy path user journeys)
+- Edge case tests: [N] (boundary conditions, empty states, max limits)
+- Error scenario tests: [N] (failures, timeouts, invalid input)
+- Security tests: [N] (auth, injection, CORS — augmented by qa-security)
+- Performance tests: [N] (load, latency — augmented by qa-security)
+- Data integrity tests: [N] (concurrent writes, idempotency, replays)
 ```
 
 #### 3i. Implementation Sequence
@@ -196,7 +193,29 @@ Build in this order:
 
 ---
 
-### Step 4: Cross-Reference Check
+### Step 4: Generate TEST-PLAN.md Per Service
+
+After writing each SPEC.md, generate a corresponding `services/<name>/specs/TEST-PLAN.md` following the template in `standards/testing-standards.md`.
+
+**How to generate test cases systematically:**
+1. Walk each **API endpoint** in section 3c → create acceptance tests (happy path), validation error tests, auth failure tests, not-found tests
+2. Walk each **business rule** in section 3e → create positive test, negative test, boundary test
+3. Walk each **state transition** in section 3e → create valid transition test, invalid transition test, concurrent transition test
+4. Walk each **event published** in section 3d → create payload correctness test, trigger condition test
+5. Walk each **event consumed** in section 3d → create happy path, duplicate event, malformed event, handler failure tests
+6. Walk each **integration point** in section 3f → create success, timeout, circuit breaker, retry exhaustion tests
+7. Walk the **systematic edge case checklist** in `standards/testing-standards.md` → for each applicable item, create an edge case test
+8. For **data integrity** → create idempotency tests, concurrent write tests, orphaned reference tests
+
+**QA & Security augmentation** (if running in team mode):
+After lead-engineer writes the initial test cases (sections 1-3, 6), the qa-security agent augments the TEST-PLAN.md with:
+- Section 4: Security test cases (auth bypass, injection, CORS, rate limiting)
+- Section 5: Performance test cases (load profiles, latency SLAs)
+- Additional edge cases the lead-engineer may have missed
+
+**Complete the traceability matrix** (section 7) linking every test case to its SPEC.md section and contract reference.
+
+### Step 5: Cross-Reference Check
 
 After writing all specs, verify:
 - Every API call from service A to service B has matching endpoints in both specs
@@ -206,7 +225,7 @@ After writing all specs, verify:
 
 List any inconsistencies found and resolve them.
 
-### Step 5: Mark Complete
+### Step 6: Mark Complete
 
 Create `phases/3-specify.md`:
 ```markdown

@@ -11,8 +11,10 @@ You are the **Validation Agent**. Your job is to verify that all built services 
 ### Step 1: Read Context
 1. `manifest.yaml` — all services and their dependencies
 2. `contracts/CONTRACT-MATRIX.md` — all cross-service interfaces
-3. All `services/*/specs/BUILD-REPORT.md` — what was built
-4. All contract files in `contracts/`
+3. `contracts/INTEGRATION-TEST-PLAN.md` — pre-defined cross-service test scenarios (if exists)
+4. All `services/*/specs/BUILD-REPORT.md` — what was built
+5. All `services/*/specs/TEST-REPORT.md` — test case implementation status (if exists)
+6. All contract files in `contracts/`
 
 ### Step 2: Contract Compliance Check
 
@@ -25,9 +27,15 @@ For each built service, verify:
 
 Generate: `phases/6-validate.md` starting with contract compliance results.
 
-### Step 3: Integration Test Plan
+### Step 3: Execute Integration Test Plan
 
-Create integration test scenarios that span services:
+If `contracts/INTEGRATION-TEST-PLAN.md` exists (generated in Phase 4):
+- Use it as the primary test plan — do NOT create scenarios from scratch
+- Execute each E2E user journey, failure cascade, and eventual consistency scenario
+- For each scenario, record: pass/fail, actual vs expected behavior, issues found
+
+If `contracts/INTEGRATION-TEST-PLAN.md` does NOT exist (older workflow):
+- Create integration test scenarios that span services:
 
 ```markdown
 ## Cross-Service Test Scenarios
@@ -44,6 +52,14 @@ Create integration test scenarios that span services:
 2. [Service B] is down
 3. **Verify**: [circuit breaker activates, error propagated correctly]
 ```
+
+### Step 3b: Contract Test Verification
+
+If `contract_test_required` quality gate is enabled in manifest.yaml:
+- Verify Pact contract tests exist for every API contract in `contracts/api/`
+- Verify event schema validation tests exist for every event contract in `contracts/events/`
+- Run contract tests across all provider-consumer pairs
+- Report any contract violations
 
 ### Step 4: Docker Compose Validation
 
@@ -65,7 +81,10 @@ Run the composed system and verify:
 
 Complete `phases/6-validate.md` with:
 - Contract compliance: pass/fail per service
-- Integration scenarios: pass/fail per scenario
+- Contract test results: pass/fail per contract (if `contract_test_required`)
+- Integration scenarios: pass/fail per scenario (referencing INTEGRATION-TEST-PLAN.md IDs where applicable)
+- Test case coverage summary per service (from TEST-REPORT.md files)
+- Security test results (if `security_test_required` gate enabled)
 - Issues found and recommended fixes
 - System-wide docker-compose.yaml location
 
